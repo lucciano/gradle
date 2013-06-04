@@ -229,10 +229,12 @@ public class DefaultFileLockManager implements FileLockManager {
                         } catch (InterruptedException e) {
                             throw throwAsUncheckedException(e);
                         }
-                        try {
-                            lockFileAccess.setLength(INFORMATION_REGION_POS);
-                        } finally {
-                            info.release();
+                        if (info != null) {
+                            try {
+                                lockFileAccess.setLength(INFORMATION_REGION_POS);
+                            } finally {
+                                info.release();
+                            }
                         }
                     }
                 } finally {
